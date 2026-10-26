@@ -233,8 +233,8 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
 
     if (mounted) {
       setState(() {
-        _hasNotificationPermission = results[0] as bool;
-        _serviceRunning = results[1] as bool;
+        _hasNotificationPermission = results[0];
+        _serviceRunning = results[1];
         _volumeInfo = volumeInfo;
       });
     }
@@ -419,16 +419,20 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
               ],
             ),
             const SizedBox(height: 16),
-            ...(_streamTypes.entries.map((entry) {
-              return RadioListTile<String>(
-                title: Text(entry.value),
-                value: entry.key,
-                groupValue: _selectedStreamType,
-                onChanged: _changeStreamType,
-                dense: true,
-                contentPadding: EdgeInsets.zero,
-              );
-            })),
+            RadioGroup<String>(
+              groupValue: _selectedStreamType,
+              onChanged: _changeStreamType,
+              child: Column(
+                children: _streamTypes.entries.map((entry) {
+                  return RadioListTile<String>(
+                    title: Text(entry.value),
+                    value: entry.key,
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                  );
+                }).toList(),
+              ),
+            ),
           ],
         ),
       ),
