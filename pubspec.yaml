@@ -2,7 +2,7 @@ name: volumn_controller
 description: "A lightweight Android volume controller with persistent notification and home-screen widgets."
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: ^3.13.3
