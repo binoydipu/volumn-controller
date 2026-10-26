@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Volumn Controller</string>
+    <string name="widget_1x1_desc">Open volume panel</string>
+    <string name="widget_1x2_desc">Volume up and down</string>
+    <string name="widget_1x3_desc">Volume panel and controls</string>
+    <string name="widget_1x1_label">Vol Panel</string>
+    <string name="widget_1x2_label">Vol +/−</string>
+    <string name="widget_1x3_label">Vol Controls</string>
+</resources>
+
