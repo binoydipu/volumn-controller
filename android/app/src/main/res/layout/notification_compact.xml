@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Compact view for the persistent volume-control notification.
+    Uses RemoteViews so no MediaStyle is needed, keeping the notification
+    silent and the status-bar icon hidden (IMPORTANCE_LOW channel).
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <!-- App title (left side) -->
+    <TextView
+        android:id="@+id/notif_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Volume Controller"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="@color/notif_fg_color"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:paddingStart="4dp" />
+
+    <!-- Vol − button -->
+    <ImageButton
+        android:id="@+id/notif_btn_vol_down"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:src="@drawable/ic_vol_minus"
+        android:tint="@color/notif_fg_color"
+        android:scaleType="centerInside"
+        android:padding="10dp"
+        android:background="@drawable/notif_btn_ripple"
+        android:contentDescription="Volume down" />
+
+    <!-- Vol + button -->
+    <ImageButton
+        android:id="@+id/notif_btn_vol_up"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:src="@drawable/ic_vol_plus"
+        android:tint="@color/notif_fg_color"
+        android:scaleType="centerInside"
+        android:padding="10dp"
+        android:background="@drawable/notif_btn_ripple"
+        android:contentDescription="Volume up" />
+
+    <!-- Panel button -->
+    <ImageButton
+        android:id="@+id/notif_btn_panel"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:src="@drawable/ic_vol_panel"
+        android:tint="@color/notif_fg_color"
+        android:scaleType="centerInside"
+        android:padding="10dp"
+        android:background="@drawable/notif_btn_ripple"
+        android:contentDescription="Open volume panel" />
+
+</LinearLayout>
+

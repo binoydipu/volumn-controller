@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Circular bounded ripple for notification compact-view buttons. -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/notif_ripple_color">
+    <!-- Oval mask clips the ripple to a circle matching the button bounds. -->
+    <item android:id="@android:id/mask">
+        <shape android:shape="oval">
+            <solid android:color="#FFFFFF" />
+        </shape>
+    </item>
+</ripple>
+

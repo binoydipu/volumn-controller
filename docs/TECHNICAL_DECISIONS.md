@@ -56,15 +56,17 @@ Verified and documented on 2026-10-26.
 - A clear subtype description explains the purpose for Google Play review.
 - On API < 34, no service type is required in `startForeground()`.
 
-### 4. Notification Compact Presentation (MediaStyle)
+### 4. Notification Compact Presentation & Silent Notification Status Bar Icon
 
-**Decision:** Apply NotificationCompat.MediaStyle with .setShowActionsInCompactView(0, 1, 2) and distinct vector drawables for actions (ic_vol_minus, ic_vol_plus, ic_vol_panel).
+**Decision:** Apply `NotificationCompat.MediaStyle` with `.setShowActionsInCompactView(0, 1, 2)` and distinct vector drawables (`ic_vol_minus`, `ic_vol_plus`, `ic_vol_panel`), while explicitly setting `.setCategory(NotificationCompat.CATEGORY_SERVICE)` on the notification builder and migrating to notification channel `volume_controls_v2`.
 
 **Rationale:**
 - In standard Android notifications, action buttons are hidden by SystemUI when the notification is collapsed into a single line.
-- NotificationCompat.MediaStyle.setShowActionsInCompactView is Android's official supported mechanism for promoting action buttons to stay visible in collapsed (compact) mode.
+- `NotificationCompat.MediaStyle.setShowActionsInCompactView` is Android's official supported mechanism for promoting action buttons to stay visible in collapsed (compact) mode.
 - Does not attach a MediaSession token, ensuring the notification stays in the notification shade rather than being routed into the Quick Settings media carousel on Android 13+.
 - Android limits compact view to at most 3 actions (matches our 3 actions: Vol −, Vol +, Panel).
+- **Silent notification and status-bar icon behavior:** AOSP `Notification.MediaStyle` defaults unassigned categories to `CATEGORY_TRANSPORT`. SystemUI places `CATEGORY_TRANSPORT` notifications into the active media/alerting bucket, promoting them out of the "Silent notifications" section and forcing their icons onto the status bar. Explicitly overriding the category with `.setCategory(NotificationCompat.CATEGORY_SERVICE)` ensures SystemUI honors `IMPORTANCE_LOW` without media classification, properly routing the notification to the Silent section and suppressing its status bar icon according to user preferences.
+- **Channel Migration (`volume_controls_v2`):** In Android API 26+, once a notification channel is created, its importance, sound, and silent classification cannot be programmatically changed. Migrating to channel ID `volume_controls_v2` and deleting the legacy `volume_controls` channel ensures existing installations cleanly adopt the silent configuration without requiring manual app data wipes.
 
 ### 5. Shared VolumeHelper singleton
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Notification compact view foreground: light on dark theme -->
+    <color name="notif_fg_color">#FFFFFFFF</color>
+    <!-- Notification button ripple: semi-transparent light on dark theme -->
+    <color name="notif_ripple_color">#33FFFFFF</color>
+</resources>
+
