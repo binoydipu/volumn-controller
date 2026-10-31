@@ -1,41 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="4dp"
-    android:background="@drawable/widget_background"
-    android:gravity="center">
+    android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/btn_panel"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:src="@android:drawable/ic_lock_silent_mode_off"
-        android:scaleType="centerInside"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Open volume panel" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:padding="4dp"
+        android:background="@drawable/widget_background"
+        android:gravity="center">
 
-    <ImageButton
-        android:id="@+id/btn_vol_down"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:src="@android:drawable/btn_minus"
-        android:scaleType="centerInside"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Volume down" />
+        <ImageButton
+            android:id="@+id/btn_panel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_vol_panel"
+            android:tint="#FFFFFFFF"
+            android:scaleType="centerInside"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Open volume panel" />
 
-    <ImageButton
-        android:id="@+id/btn_vol_up"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:src="@android:drawable/btn_plus"
-        android:scaleType="centerInside"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Volume up" />
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:background="#33FFFFFF"
+            android:importantForAccessibility="no" />
 
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/btn_vol_down"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_vol_minus"
+            android:tint="#FFFFFFFF"
+            android:scaleType="centerInside"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Volume down" />
 
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:background="#33FFFFFF"
+            android:importantForAccessibility="no" />
+
+        <ImageButton
+            android:id="@+id/btn_vol_up"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/ic_vol_plus"
+            android:tint="#FFFFFFFF"
+            android:scaleType="centerInside"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Volume up" />
+
+    </LinearLayout>
+
+</FrameLayout>

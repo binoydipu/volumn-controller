@@ -6,6 +6,8 @@ void main() {
   runApp(const VolumnControllerApp());
 }
 
+const version = '1.0.4';
+
 class VolumnControllerApp extends StatelessWidget {
   const VolumnControllerApp({super.key});
 
@@ -29,7 +31,8 @@ class VolumeService {
 
   static Future<bool> startNotificationService() async {
     try {
-      return await _channel.invokeMethod<bool>('startNotificationService') ?? false;
+      return await _channel.invokeMethod<bool>('startNotificationService') ??
+          false;
     } on PlatformException catch (e) {
       debugPrint('Failed to start service: ${e.message}');
       return false;
@@ -38,7 +41,8 @@ class VolumeService {
 
   static Future<bool> stopNotificationService() async {
     try {
-      return await _channel.invokeMethod<bool>('stopNotificationService') ?? false;
+      return await _channel.invokeMethod<bool>('stopNotificationService') ??
+          false;
     } on PlatformException catch (e) {
       debugPrint('Failed to stop service: ${e.message}');
       return false;
@@ -47,7 +51,10 @@ class VolumeService {
 
   static Future<bool> isNotificationServiceRunning() async {
     try {
-      return await _channel.invokeMethod<bool>('isNotificationServiceRunning') ?? false;
+      return await _channel.invokeMethod<bool>(
+            'isNotificationServiceRunning',
+          ) ??
+          false;
     } on PlatformException {
       return false;
     }
@@ -92,7 +99,8 @@ class VolumeService {
 
   static Future<String> getVolumeStreamType() async {
     try {
-      return await _channel.invokeMethod<String>('getVolumeStreamType') ?? 'media';
+      return await _channel.invokeMethod<String>('getVolumeStreamType') ??
+          'media';
     } on PlatformException {
       return 'media';
     }
@@ -110,7 +118,8 @@ class VolumeService {
 
   static Future<bool> isNotificationEnabled() async {
     try {
-      return await _channel.invokeMethod<bool>('isNotificationEnabled') ?? false;
+      return await _channel.invokeMethod<bool>('isNotificationEnabled') ??
+          false;
     } on PlatformException {
       return false;
     }
@@ -128,7 +137,8 @@ class VolumeService {
 
   static Future<bool> hasNotificationPermission() async {
     try {
-      return await _channel.invokeMethod<bool>('hasNotificationPermission') ?? false;
+      return await _channel.invokeMethod<bool>('hasNotificationPermission') ??
+          false;
     } on PlatformException {
       return false;
     }
@@ -136,7 +146,10 @@ class VolumeService {
 
   static Future<bool> requestNotificationPermission() async {
     try {
-      return await _channel.invokeMethod<bool>('requestNotificationPermission') ?? false;
+      return await _channel.invokeMethod<bool>(
+            'requestNotificationPermission',
+          ) ??
+          false;
     } on PlatformException {
       return false;
     }
@@ -166,7 +179,8 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObserver {
+class _SettingsScreenState extends State<SettingsScreen>
+    with WidgetsBindingObserver {
   bool _notificationEnabled = false;
   bool _hasNotificationPermission = false;
   bool _serviceRunning = false;
@@ -320,16 +334,11 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
   @override
   Widget build(BuildContext context) {
     if (_loading) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Volumn Controller'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Volumn Controller'), centerTitle: true),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -457,7 +466,10 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                 const SizedBox(width: 12),
                 Text(
                   'Volume Test — ${_streamTypes[_selectedStreamType] ?? _selectedStreamType}',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ],
             ),
@@ -538,9 +550,7 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
               dense: true,
               contentPadding: EdgeInsets.zero,
               leading: Icon(
-                _hasNotificationPermission
-                    ? Icons.check_circle
-                    : Icons.cancel,
+                _hasNotificationPermission ? Icons.check_circle : Icons.cancel,
                 color: _hasNotificationPermission
                     ? Colors.green
                     : Theme.of(context).colorScheme.error,
@@ -621,6 +631,14 @@ class _SettingsScreenState extends State<SettingsScreen> with WidgetsBindingObse
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
                 fontSize: 13,
                 height: 1.5,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'Version: $version\nGitHub: https://github.com/binoydipu/volumn-controller',
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                fontSize: 13,
               ),
             ),
           ],

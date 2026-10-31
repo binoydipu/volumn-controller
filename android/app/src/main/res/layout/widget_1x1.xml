@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="4dp"
-    android:background="@drawable/widget_background">
+    android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/btn_panel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@android:drawable/ic_lock_silent_mode_off"
-        android:scaleType="centerInside"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Open volume panel" />
+    <FrameLayout
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="center"
+        android:background="@drawable/widget_background">
+
+        <ImageButton
+            android:id="@+id/btn_panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_vol_panel"
+            android:tint="#FFFFFFFF"
+            android:scaleType="centerInside"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Open volume panel" />
+
+    </FrameLayout>
 
 </FrameLayout>
-
