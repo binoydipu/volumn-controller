@@ -92,9 +92,18 @@ android/app/src/main/
     VolumeWidget1x2.kt          # 1×2 widget provider
     VolumeWidget1x3.kt          # 1×3 widget provider
   res/
-    layout/widget_*.xml         # Widget layouts
+    layout/
+      notification_compact.xml  # RemoteViews layout for notification compact row
+      widget_*.xml              # Widget layouts
+    drawable/
+      ic_vol_minus.xml          # Vol − vector icon
+      ic_vol_plus.xml           # Vol + vector icon
+      ic_vol_panel.xml          # Panel vector icon
+      notif_btn_ripple.xml      # Circular ripple for notification buttons
+      widget_background.xml
     xml/widget_*_info.xml       # Widget metadata
-    drawable/widget_background.xml
+    values/colors.xml           # Colors incl. notif_fg_color, notif_ripple_color
+    values-night/colors.xml     # Dark-theme overrides for notification colors
     values/strings.xml
   AndroidManifest.xml           # Permissions, services, receivers, widgets
 docs/

@@ -23,6 +23,7 @@ This document lists the official documentation sources relevant to the Volumn Co
 | Foreground services | https://developer.android.com/develop/background-work/services/fgs | Service types, permissions, start restrictions, API 34+ type requirements, `FOREGROUND_SERVICE_TYPE_SPECIAL_USE` |
 | Foreground service types | https://developer.android.com/about/versions/14/changes/fgs-types-required | API 34+ requirement to declare and specify foreground service types |
 | Notifications | https://developer.android.com/develop/ui/views/notifications | Notification channels, importance levels, ongoing notifications |
+| Custom notification layouts | https://developer.android.com/develop/ui/views/notifications/custom-notification | `RemoteViews` with `setCustomContentView()` and `DecoratedCustomViewStyle` for compact-row button controls |
 | Notification permission | https://developer.android.com/develop/ui/views/notifications/notification-permission | `POST_NOTIFICATIONS` runtime permission (API 33+) |
 | App widgets | https://developer.android.com/develop/ui/views/appwidgets | Widget providers, RemoteViews, metadata XML, PendingIntents |
 | App widget overview | https://developer.android.com/develop/ui/views/appwidgets/overview | Widget lifecycle, `onUpdate()`, `AppWidgetProvider`, responsive layouts |

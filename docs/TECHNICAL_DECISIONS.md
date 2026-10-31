@@ -58,15 +58,14 @@ Verified and documented on 2026-10-26.
 
 ### 4. Notification Compact Presentation & Silent Notification Status Bar Icon
 
-**Decision:** Apply `NotificationCompat.MediaStyle` with `.setShowActionsInCompactView(0, 1, 2)` and distinct vector drawables (`ic_vol_minus`, `ic_vol_plus`, `ic_vol_panel`), while explicitly setting `.setCategory(NotificationCompat.CATEGORY_SERVICE)` on the notification builder and migrating to notification channel `volume_controls_v2`.
+**Decision:** Use a `RemoteViews` custom layout (`notification_compact.xml`) set via `.setCustomContentView()` with `NotificationCompat.DecoratedCustomViewStyle()`, and distinct vector drawables (`ic_vol_minus`, `ic_vol_plus`, `ic_vol_panel`) for the three action buttons. `MediaStyle` is explicitly **not** used.
 
 **Rationale:**
-- In standard Android notifications, action buttons are hidden by SystemUI when the notification is collapsed into a single line.
-- `NotificationCompat.MediaStyle.setShowActionsInCompactView` is Android's official supported mechanism for promoting action buttons to stay visible in collapsed (compact) mode.
-- Does not attach a MediaSession token, ensuring the notification stays in the notification shade rather than being routed into the Quick Settings media carousel on Android 13+.
-- Android limits compact view to at most 3 actions (matches our 3 actions: Vol −, Vol +, Panel).
-- **Silent notification and status-bar icon behavior:** AOSP `Notification.MediaStyle` defaults unassigned categories to `CATEGORY_TRANSPORT`. SystemUI places `CATEGORY_TRANSPORT` notifications into the active media/alerting bucket, promoting them out of the "Silent notifications" section and forcing their icons onto the status bar. Explicitly overriding the category with `.setCategory(NotificationCompat.CATEGORY_SERVICE)` ensures SystemUI honors `IMPORTANCE_LOW` without media classification, properly routing the notification to the Silent section and suppressing its status bar icon according to user preferences.
-- **Channel Migration (`volume_controls_v2`):** In Android API 26+, once a notification channel is created, its importance, sound, and silent classification cannot be programmatically changed. Migrating to channel ID `volume_controls_v2` and deleting the legacy `volume_controls` channel ensures existing installations cleanly adopt the silent configuration without requiring manual app data wipes.
+- **Why not `MediaStyle`:** `NotificationCompat.MediaStyle` (with or without a MediaSession token) causes SystemUI to classify the notification as a media/transport item. This forces the app icon onto the status bar and routes the notification out of the "Silent" section — regardless of channel importance, `CATEGORY_SERVICE`, or `PRIORITY_LOW`. This behavior was confirmed by regression against v1.0.1 (commit `bac9cfb`).
+- **`RemoteViews` approach:** A custom `RemoteViews` layout inflated via `.setCustomContentView()` + `DecoratedCustomViewStyle()` renders the three icon buttons in the collapsed notification row without any media classification. SystemUI respects `IMPORTANCE_LOW` → the notification is silent and the status-bar icon is suppressed.
+- **Theme-adaptive colors:** Button icons and the title `TextView` use `@color/notif_fg_color`, which resolves to `#DE000000` (light theme) or `#FFFFFFFF` (dark theme) via the `values/` and `values-night/` resource qualifiers. No code change is needed when the system theme changes.
+- **Circular ripple feedback:** Buttons use `@drawable/notif_btn_ripple` — a `<ripple>` drawable with an oval mask — clipping the touch ripple to a circle. The ripple color (`@color/notif_ripple_color`) is also theme-adaptive (`#33000000` light / `#33FFFFFF` dark).
+- **Channel lineage:** `IMPORTANCE_LOW` channel `volume_controls_v4` is the current active channel. On service start, all legacy channels (`volume_controls`, `volume_controls_v2`, `volume_controls_v3`) are deleted so existing installs adopt the correct channel without a data wipe. Channel importance cannot be changed after creation on API 26+; a new channel ID is required.
 
 ### 5. Shared VolumeHelper singleton
 
@@ -133,4 +132,6 @@ Verified and documented on 2026-10-26.
 4. **Widget theme limitations.** Home-screen widgets use `RemoteViews`, which do not support full Material 3 theming. The widget uses a semi-transparent dark background that works reasonably well on most launchers.
 
 5. **Volume panel display from background.** On Android 10+, showing the system volume panel from a BroadcastReceiver (triggered by notification/widget action) may be restricted. The `adjustStreamVolume` with `FLAG_SHOW_UI` approach works from foreground services but may be limited from background-only contexts.
+
+6. **RemoteViews theming in notification.** The compact notification view is rendered by SystemUI using `RemoteViews`. Theme-adaptive colors are handled via `values/` and `values-night/` color resources rather than `?attr/` references, which may not resolve reliably in the remote process on all Android versions and OEM skins.
 
