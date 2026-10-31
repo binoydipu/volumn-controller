@@ -11,6 +11,7 @@ import android.content.pm.ServiceInfo
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import androidx.media.app.NotificationCompat.MediaStyle
 
 /**
  * Foreground service that keeps a persistent notification with
@@ -109,9 +110,13 @@ class VolumeNotificationService : Service() {
             .setOngoing(true)
             .setSilent(true)
             .setPriority(NotificationCompat.PRIORITY_LOW)
-            .addAction(0, "Vol −", volDownPending)
-            .addAction(0, "Vol +", volUpPending)
-            .addAction(0, "Panel", panelPending)
+            .addAction(R.drawable.ic_vol_minus, "Vol −", volDownPending)
+            .addAction(R.drawable.ic_vol_plus, "Vol +", volUpPending)
+            .addAction(R.drawable.ic_vol_panel, "Panel", panelPending)
+            .setStyle(
+                MediaStyle()
+                    .setShowActionsInCompactView(0, 1, 2)
+            )
             .build()
     }
 }

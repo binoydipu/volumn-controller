@@ -56,7 +56,17 @@ Verified and documented on 2026-10-26.
 - A clear subtype description explains the purpose for Google Play review.
 - On API < 34, no service type is required in `startForeground()`.
 
-### 4. Shared VolumeHelper singleton
+### 4. Notification Compact Presentation (MediaStyle)
+
+**Decision:** Apply NotificationCompat.MediaStyle with .setShowActionsInCompactView(0, 1, 2) and distinct vector drawables for actions (ic_vol_minus, ic_vol_plus, ic_vol_panel).
+
+**Rationale:**
+- In standard Android notifications, action buttons are hidden by SystemUI when the notification is collapsed into a single line.
+- NotificationCompat.MediaStyle.setShowActionsInCompactView is Android's official supported mechanism for promoting action buttons to stay visible in collapsed (compact) mode.
+- Does not attach a MediaSession token, ensuring the notification stays in the notification shade rather than being routed into the Quick Settings media carousel on Android 13+.
+- Android limits compact view to at most 3 actions (matches our 3 actions: Vol −, Vol +, Panel).
+
+### 5. Shared VolumeHelper singleton
 
 **Decision:** Centralize all volume operations in a `VolumeHelper` object used by the service, receiver, and activity.
 
@@ -65,7 +75,7 @@ Verified and documented on 2026-10-26.
 - Avoids duplicating volume logic across notification actions, widget actions, and the Flutter UI.
 - Stateless design — no risk of stale references across process restarts.
 
-### 5. BroadcastReceiver for notification and widget actions
+### 6. BroadcastReceiver for notification and widget actions
 
 **Decision:** Use a single `VolumeActionReceiver` for all volume-control intents from both notifications and widgets.
 
@@ -74,7 +84,7 @@ Verified and documented on 2026-10-26.
 - A BroadcastReceiver is the lightest-weight component for handling these.
 - No Flutter engine needed — the receiver reads SharedPreferences and calls AudioManager directly.
 
-### 6. SharedPreferences for settings persistence
+### 7. SharedPreferences for settings persistence
 
 **Decision:** Use Android's native `SharedPreferences` ("volumn_controller_prefs") as the single source of truth.
 
@@ -83,7 +93,7 @@ Verified and documented on 2026-10-26.
 - No database setup required for two boolean/string preferences.
 - Flutter's `shared_preferences` package also reads from Android SharedPreferences, ensuring consistency.
 
-### 7. START_STICKY service restart policy
+### 8. START_STICKY service restart policy
 
 **Decision:** Return `START_STICKY` from `onStartCommand()`.
 
@@ -92,7 +102,7 @@ Verified and documented on 2026-10-26.
 - Combined with the `BootReceiver`, provides best-effort persistence.
 - Does not guarantee the service is always running — Android can still force-stop apps.
 
-### 8. No internet permission
+### 9. No internet permission
 
 **Decision:** The app requests no internet access.
 
@@ -101,7 +111,7 @@ Verified and documented on 2026-10-26.
 - Reduces attack surface and eliminates a common user concern.
 - The `INTERNET` permission is not declared in the manifest.
 
-### 9. Dark theme only
+### 10. Dark theme only
 
 **Decision:** Use Material 3 dark theme with `colorSchemeSeed: Colors.deepPurple`.
 
